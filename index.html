@@ -1,0 +1,36 @@
+<head>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+</head>
+
+<div id="plot" style="width:600px;height:250px;"></div>
+
+<script>
+    const Http = new XMLHttpRequest();
+    const url = 'http://localhost:5000/docs/gender/avg';
+    Http.open("GET", url);
+    Http.responseType = 'json';
+    Http.send();
+
+    Http.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log(Http.response)
+            let x = []
+            let y = []
+            for (const elem of Http.response) {
+                console.log(elem);
+                x.push(elem["gender"] === "M" ? "MALE": "FEMALE");
+                y.push(elem["avg_age"])
+            }
+            console.log(x);
+            let plot = document.getElementById('plot');
+            Plotly.newPlot(plot, [{
+                x: x,
+                y: y, type: 'bar',
+                name: "AVG age by gender"
+            }], {
+                margin: {t: 0}
+            });
+        }
+
+    }
+</script>
