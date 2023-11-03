@@ -4,7 +4,9 @@
 ```
 docker-compose up --build
 ```
-This command starts an ElasticSearch single node (exposed on port 9200) and a Flask app exposed on port 5000
+This command starts an ElasticSearch single node (exposed on port 9200) and a Flask app exposed on port 5000.
+
+User could do a POST /docs-100 to load first 100 docs and then just use explorer to access http://0.0.0.0:5000/ and visualize the plot.
 
 ## Local Development
 

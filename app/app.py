@@ -2,15 +2,13 @@ import logging
 import random
 
 from elasticsearch import Elasticsearch, ConnectionError
-from flask import Flask, jsonify
-from flask_cors import CORS
+from flask import Flask, jsonify, render_template
 
 from config import Config
 from load_index import load_index
 from search_service import SearchService, AggOps
 
 app = Flask(__name__)
-CORS(app)
 app.config.from_object(Config)
 app.elasticsearch = Elasticsearch(app.config['ELASTICSEARCH_URL'])
 app.search_service = SearchService(app.elasticsearch, 'my_index')
@@ -23,7 +21,7 @@ AGG_OPS = ['avg', 'min', 'max']
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return render_template('index.html')
 
 
 @app.route("/health")
@@ -54,7 +52,7 @@ def get_docs_count():
 @app.route("/docs", methods=['POST'])
 def post_doc():
     lines = []
-    with open("/usr/share/dict/words", 'r') as f:
+    with open("words", 'r') as f:
         for line in f:
             lines.append(line[:-1])
     nickname = lines[random.randrange(len(lines))]
