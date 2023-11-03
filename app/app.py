@@ -6,7 +6,7 @@ from flask import Flask, jsonify
 
 from config import Config
 from load_index import load_index
-from search_service import SearchService
+from search_service import SearchService, AggOps
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -73,4 +73,4 @@ def post_docs_100():
 
 @app.route("/docs/gender/<agg_op>", methods=['GET'])
 def get_gender_agg(agg_op: str):
-    return app.search_service.get_agg_by_gender(agg_op)
+    return app.search_service.get_agg_by_gender(AggOps[agg_op.upper()])

@@ -1,12 +1,12 @@
-from enum import StrEnum
+from enum import StrEnum, auto
 
 from elasticsearch import Elasticsearch
 
 
 class AggOps(StrEnum):
-    AVG = 'avg'
-    MIN = 'min'
-    MAX = 'max'
+    AVG = auto()
+    MIN = auto()
+    MAX = auto()
 
 
 class SearchService:
