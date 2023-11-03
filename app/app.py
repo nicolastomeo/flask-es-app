@@ -3,12 +3,14 @@ import random
 
 from elasticsearch import Elasticsearch, ConnectionError
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 from config import Config
 from load_index import load_index
 from search_service import SearchService, AggOps
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object(Config)
 app.elasticsearch = Elasticsearch(app.config['ELASTICSEARCH_URL'])
 app.search_service = SearchService(app.elasticsearch, 'my_index')
